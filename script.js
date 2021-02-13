@@ -58,7 +58,6 @@ function checkOut(where) {
     text.innerHTML = "Available";
 }
 
-<<<<<<< HEAD
 
 function CheckInParkingLot(info) {
     if (info["parking_lot_name"] == "A") {
@@ -87,17 +86,17 @@ function CheckOutParkingLot(info) {
     }
     else if (info["parking_lot_name"] == "B") {
         B.timestamp_out  = info['timstamp'];
-        B.available     = false;
+        B.available     = true;
         updateLastCheckOut(B);
     }
     else if (info["parking_lot_name"] == "C") {
         C.timestamp_out  = info['timstamp'];
-        C.available     = false;
+        C.available     = true;
         updateLastCheckOut(C);
     }
     else if (info["parking_lot_name"] == "D") {
         D.timestamp_out  = info['timstamp'];
-        D.available     = false;
+        D.available     = true;
         updateLastCheckOut(D);
     } 
 }
@@ -111,26 +110,31 @@ function updateLastCheckOut(P) {
     var timeIn = new Date(P.timestamp_in);
     var timeOut = new Date(P.timestamp_out);
     var timePark = timeOut - timeIn;
-    var timeParkMinute = Math.ceil(timePark/60);
+    var timeParkMinute = Math.ceil(timePark/1000/60);
     var timeInStr = timeIn.toLocaleString("en-US", {timeZoneName: "short"})
     var timeOutStr = timeOut.toLocaleString("en-US", {timeZoneName: "short"})
 
 
     parkingLotElement.innerHTML = `Parking Lot ${P.name}`;
-    timeInElement.innerHTML = `In: ${timeInStr}`;
-    timeOutelement.innerHTML = `Out: ${timeOutStr}`;
-    costElement.innerHTML = `${timeParkMinute*20}`;
+    timeInElement.innerHTML = `${timeInStr}`;
+    timeOutelement.innerHTML = `${timeOutStr}`;
+    costElement.innerHTML = `${timeParkMinute*20} XCoin`;
+
+    P.timestamp_in = 0;
+    P.timestamp_out = 0;
+
 
 }
 
-function updateUI(info) {
+function updateUI_LOCAL(info) {
     if (info["parking_available"]) {
         checkIn(info["parking_lot_name"], info["timstamp"]);
         CheckInParkingLot(info);
     } else {
         checkOut(info["parking_lot_name"]);
         CheckOutParkingLot(info);
-=======
+    }
+}
 // for dict?
 // function updateUI(info) {
 //     if (info["parking_available"]) {
@@ -146,7 +150,6 @@ function updateUI(info) {
         checkIn(info.parking_lot_name, info.timstamp);
     } else {
         checkOut(info.parking_lot_name);
->>>>>>> 9702055dfa3903340bbe80f73a6e2843dcc2a19d
     }
 }
 
@@ -159,8 +162,7 @@ function updateUI(info) {
 // setInterval(() => {
 //     updateUI();
 // }, 1000);
-
-<<<<<<< HEAD
+// LOCAL
 let first_info = {
     "_id": "602748f4f56e3c00070ec8af",
     "parking_lot_name": "A",
@@ -173,29 +175,43 @@ let second_info = {
     "parking_available": false,
     "timstamp": 1613197625
 };
-function sender()
-{
-    updateUI(second_info);
+let third_info = {
+    "_id": "602748f4f56e3c00070ec8af",
+    "parking_lot_name": "B",
+    "parking_available": true,
+    "timstamp": 1613197625
+};
+let fourth_info = {
+    "_id": "602748f4f56e3c00070ec8af",
+    "parking_lot_name": "B",
+    "parking_available": false,
+    "timstamp": 1623197625
+};
+function sender1() {
+    updateUI_LOCAL(second_info);
 }
+function sender2() {
+    updateUI_LOCAL(third_info);
+}
+function sender3() {
+    updateUI_LOCAL(fourth_info);
+}
+//
+
+
+
+
 // ใช้ไอ้นี้ สำหลับทุก json record
-updateUI(first_info);
-var a = setTimeout(sender , 5000);
-=======
-// let first_info = {
-//     "_id": "602748f4f56e3c00070ec8af",
-//     "parking_lot_name": "A",
-//     "parking_available": false,
-//     "timstamp": 1613187625
-// };
-// let second_info = {
-//     "_id": "602748f4f56e3c00070ec8af",
-//     "parking_lot_name": "B",
-//     "parking_available": true,
-//     "timstamp": 1613187625
-// };
-// ใช้ไอ้นี้ สำหลับทุก json record
-// updateUI(first_info);
-// updateUI(second_info);
+updateUI_LOCAL(first_info);
+var a = setTimeout(sender1 , 3000);
+var a = setTimeout(sender2 , 6000);
+var a = setTimeout(sender3 , 9000);
+
+
+
+
+
+
 
 
 function loadData() {
@@ -213,5 +229,3 @@ function loadData() {
         );
 }
 
-loadData();
->>>>>>> 9702055dfa3903340bbe80f73a6e2843dcc2a19d

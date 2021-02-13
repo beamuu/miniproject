@@ -174,7 +174,7 @@ window.onload = function () {
         for (var key in A_HIST) {
             yVal01 = yVal01 + A_HIST[key];
             dps01.push({ x: key, y: yVal01 });
-            delete A_HIST[key]
+            delete A_HIST[key];
         }
         if (dps01.length > dataLength01) dps01.shift();
         chart01.render();
@@ -198,7 +198,7 @@ window.onload = function () {
         for (var key in B_HIST) {
             yVal02 = yVal02 + B_HIST[key];
             dps02.push({ x: key, y: yVal02 });
-            delete B_HIST[key]
+            delete B_HIST[key];
         }
         if (dps02.length > dataLength02) dps02.shift();
         chart02.render();
@@ -227,6 +227,7 @@ window.onload = function () {
         if (dps03.length > dataLength03) dps03.shift();
         chart03.render();
     };
+
 
     //Plot04
     var dps04 = []; // dataPoints

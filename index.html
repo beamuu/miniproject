@@ -79,25 +79,34 @@
                     <td style="width: 40%;">
                         <h5 class="lc-label">Latest</h4>
                         <div class="lc-car">
-                            <h5 class="lc-main-info">Info</h5>
+                            <h5 class="lc-main-info" id="p-name"></h5>
                         </div>
                     </td>
                     <td style="width: 60%; padding-left: 5%;">
                         <div class="status-box">
                             <table style="width: 100%;">
                                 <tr>
+                                    <td class="lc-label" style="text-align: center;">
+                                        <div>In</div>
+                                    </td>
+                                    <td class="lc-label" style="text-align: center;">
+                                        <div>Out</div>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <div class="lc-in">
-                                            <p class="lc-main-info">Hello</p>
+                                            <p class="lc-main-info" id="time-in" style="font-size: 100%; font-weight: bold;"></p>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="lc-out">
-                                            <p class="lc-main-info">Hello</p>
+                                            <p class="lc-main-info" id="time-out" style="font-size: 100%; font-weight: bold;"></p>
                                         </div>
                                     </td>
                                 </tr>
                             </table>
+                            <div class="ls-cost" id="cost"></div>
                         </div>
                     </td>
                 </tr>

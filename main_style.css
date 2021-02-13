@@ -68,6 +68,6 @@ div.status-box {
 .lc-in, .lc-out {
     height: 90px;
     border-radius: 10px;
-    background-color: rgb(196, 196, 196);
+    background-color: rgb(255, 255, 255);
     position: relative;
 }

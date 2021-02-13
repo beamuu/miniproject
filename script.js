@@ -83,7 +83,7 @@ function updateUI(info) {
 
 
 function loadData() {
-    var url = "https://..."
+    var url = "http://158.108.182.0:4321/app/exceed_backend/exceed_backend/g5/view1";
     fetch(url, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -92,6 +92,7 @@ function loadData() {
         .then((datas) =>
             datas.forEach((data) => {
                 updateUI(data);
+                console.log(data);
             })
         );
 }

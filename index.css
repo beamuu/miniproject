@@ -71,3 +71,20 @@ div.status-box {
     background-color: rgb(196, 196, 196);
     position: relative;
 }
+
+.card-style {
+    width: 100%;
+    margin-bottom: 16px;
+    background-color: #7fd955;
+}
+
+.text-card {
+    color: black;
+    font-size: larger;
+    margin-top: 30%;
+}
+
+.body-card {
+    height: 300px;
+    text-align: center;
+}

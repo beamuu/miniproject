@@ -9,6 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="graph_style.css">
 
     <title>Car Parking Lot</title>
 </head>
@@ -99,6 +101,188 @@
     <!-- <div id="total"></div> -->
     <div id="graph"></div>
     <!-- <div id="history"></div> -->
+    <div id="chartContainer01" class="chart01" style="width: 24%; height: 300px;display: inline-block;"></div>
+<div id="chartContainer02" class="chart02" style="width: 24%; height: 300px;display: inline-block;"></div>
+<div id="chartContainer03" class="chart03" style="width: 24%; height: 300px;display: inline-block;"></div>
+<div id="chartContainer04" class="chart04" style="width: 24%; height: 300px;display: inline-block;"></div>
+<script>
+    window.onload = function () {
+    //dic zone
+
+    let a = {
+        34:  200,
+        102: 300,
+        227: 250,
+        233: 150
+    };  
+
+    let b = {
+        34:  200,
+        102: 300,
+        227: 250,
+        233: 150
+    };  
+
+    let c = {
+        34:  200,
+        102: 300,
+        227: 250,
+        233: 150
+    };  
+
+    let d = {
+        34:  200,
+        102: 300,
+        227: 250,
+        233: 150
+    };  
+    
+    let e = {
+        34:  200,
+        102: 300,
+        227: 250,
+        233: 150
+    }; 
+
+    //dic zone
+
+    //Plot01
+    var dps01 = []; // dataPoints
+    var chart01 = new CanvasJS.Chart("chartContainer01", 
+    {
+        title :
+        {
+            text: "A"
+        },
+        data: [{type: "line", dataPoints: dps01}]
+    });
+    //init val
+    var xVal01 = 0;
+    var yVal01 = 0; 
+    var temp = 0;
+    var updateInterval01 = 1000;
+    var dataLength01 = 20; // number of dataPoints visible at any point
+    var updateChart01 = function (count) 
+    {
+        for(var key in a)
+        {
+            yVal01 = yVal01 + a[key];
+            dps01.push({x: key, y: yVal01});
+            xVal01++; 
+            delete a[key]
+        }
+        if (dps01.length > dataLength01) dps01.shift();
+        chart01.render();
+    };
+    
+    
+    
+    
+    //Plot02
+    var dps02 = []; // dataPoints
+    var chart02 = new CanvasJS.Chart("chartContainer02", 
+    {
+        title :
+        {
+            text: "B"
+        },
+        data: [{type: "line", dataPoints: dps02}]
+    });
+    //init val
+    var xVal02 = 0;
+    var yVal02 = 0; 
+    var temp = 0;
+    var updateInterval02 = 1000;
+    var dataLength02 = 20; // number of dataPoints visible at any point
+    var updateChart02 = function (count) 
+    {
+        for(var key in b)
+        {
+            yVal02 = yVal02 + b[key];
+            dps02.push({x: key, y: yVal02});
+            xVal02++; 
+            delete b[key]
+        }
+        if (dps02.length > dataLength02) dps02.shift();
+        chart02.render();
+    };
+
+
+
+    //Plot03
+    var dps03 = []; // dataPoints
+    var chart03 = new CanvasJS.Chart("chartContainer03", 
+    {
+        title :
+        {
+            text: "C"
+        },
+        data: [{type: "line", dataPoints: dps03}]
+    });
+    //init val
+    var xVal03 = 0;
+    var yVal03 = 0; 
+    var temp = 0;
+    var updateInterval03 = 1000;
+    var dataLength03 = 20; // number of dataPoints visible at any point
+    var updateChart03 = function (count) 
+    {
+        for(var key in c)
+        {
+            yVal03 = yVal03 + c[key];
+            dps03.push({x: key, y: yVal03});
+            xVal03++; 
+            delete c[key]
+        }
+        if (dps03.length > dataLength03) dps03.shift();
+        chart03.render();
+    };
+
+
+    //Plot04
+    var dps04 = []; // dataPoints
+    var chart04 = new CanvasJS.Chart("chartContainer04", 
+    {
+        title :
+        {
+            text: "D"
+        },
+        data: [{type: "line", dataPoints: dps04}]
+    });
+    //init val
+    var xVal04 = 0;
+    var yVal04 = 0; 
+    var temp = 0;
+    var updateInterval04 = 1000;
+    var dataLength04 = 20; // number of dataPoints visible at any point
+    var updateChart04 = function (count) 
+    {
+        for(var key in d)
+        {
+            yVal04 = yVal04 + d[key];
+            dps04.push({x: key, y: yVal04});
+            xVal04++; 
+            delete d[key]
+        }
+        if (dps04.length > dataLength04) dps04.shift();
+        chart04.render();
+    };
+
+
+    updateChart01(dataLength01);
+    setInterval(function(){updateChart01()}, updateInterval01);
+    
+    updateChart02(dataLength02);
+    setInterval(function(){updateChart02()}, updateInterval02);
+
+    updateChart03(dataLength03);
+    setInterval(function(){updateChart03()}, updateInterval03);
+
+    updateChart04(dataLength04);
+    setInterval(function(){updateChart04()}, updateInterval04);
+    }
+    </script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 
 <script src="script.js"></script>

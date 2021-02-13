@@ -88,3 +88,12 @@ div.status-box {
     height: 300px;
     text-align: center;
 }
+
+.card-hover {
+    padding-top: 16px;
+}
+
+.card-hover:hover {
+    transition: .6s;
+    background-color: #00000036;
+}

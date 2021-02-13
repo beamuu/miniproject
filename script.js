@@ -222,7 +222,6 @@ window.onload = function () {
         for (var key in C_HIST) {
             yVal03 = yVal03 + C_HIST[key];
             dps03.push({ x: key, y: yVal03 });
-            xVal03 += 1000;
             delete C_HIST[key]
         }
         if (dps03.length > dataLength03) dps03.shift();
@@ -247,7 +246,6 @@ window.onload = function () {
         for (var key in D_HIST) {
             yVal04 = yVal04 + D_HIST[key];
             dps04.push({ x: key, y: yVal04 });
-            xVal04 += 1000;
             delete D_HIST[key]
         }
         if (dps04.length > dataLength04) dps04.shift();

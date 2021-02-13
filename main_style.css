@@ -5,8 +5,10 @@
 }
 
 body {
+    margin: 0;
+    border: 0;
     /* background-color: lightblue; */
-    background: linear-gradient(180deg, #2b5876 0%, #4e4376 100%);
+    /*background: linear-gradient(180deg, #2b5876 0%, #4e4376 100%);*/
 }
 
 #Head {

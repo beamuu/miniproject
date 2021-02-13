@@ -10,49 +10,64 @@ const textC = document.getElementById("text-c");
 const cardD = document.getElementById("card-d");
 const textD = document.getElementById("text-d");
 
-A_HIST = {};
-B_HIST = {};
-C_HIST = {};
-D_HIST = {};
+// time out, cost
+var A_HIST = {};
+var B_HIST = {};
+var C_HIST = {};
+var D_HIST = {};
 
-let cache = [];
+function addHistory(dict, key, value) {
+    dict[key] = value;
+}
 
-
-class ParkingLot {
-    constructor(available,timestamp_in,timestamp_out,name) {
-        this.name           = name;
-        this.available      = available;
-        this.timestamp_in   = timestamp_in;
-        this.timestamp_out  = timestamp_out;
-        this.timestamp
+function selectDict(where) {
+    switch (where) {
+        case "A":
+            return A_HIST;
+        case "B":
+            return B_HIST;
+        case "C":
+            return C_HIST;
+        case "D":
+            return D_HIST;
     }
 }
 
+class ParkingLot {
+    constructor(available, timestamp_in, timestamp_out, name) {
+        this.name = name;
+        this.available = available;
+        this.timestamp_in = timestamp_in;
+        this.timestamp_out = timestamp_out;
+    }
+}
 
-let A = new ParkingLot(true,0,0,"A");
-let B = new ParkingLot(true,0,0,"B");
-let C = new ParkingLot(true,0,0,"C");
-let D = new ParkingLot(true,0,0,"D");
+let A = new ParkingLot(true, 0, 0, "A");
+let B = new ParkingLot(true, 0, 0, "B");
+let C = new ParkingLot(true, 0, 0, "C");
+let D = new ParkingLot(true, 0, 0, "D");
 
 function selectParking(where) {
     switch (where) {
         case "A":
-            return [cardA, textA];
+            return [A, cardA, textA];
         case "B":
-            return [cardB, textB];
+            return [B, cardB, textB];
         case "C":
-            return [cardC, textC];
+            return [C, cardC, textC];
         case "D":
-            return [cardD, textD];
+            return [D, cardD, textD];
     }
 }
 
-function checkIn(where, timstamp) {
-    let [card, text] = selectParking(where);
+function checkIn(where, timestamp) {
+    let [parkinglot, card, text] = selectParking(where);
+    parkinglot.timestamp_in = timestamp;
+    parkinglot.available = false;
     card.style.backgroundColor = "#ff5757";
 
     let now = new Date().getTime();
-    var distance = now - timstamp;
+    var distance = now - timestamp;
     // Time calculations for days, hours, minutes and seconds
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -61,193 +76,194 @@ function checkIn(where, timstamp) {
     text.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 }
 
-function checkOut(where) {
-    let [card, text] = selectParking(where);
+function checkOut(where, timestamp) {
+    let [parkinglot, card, text] = selectParking(where);
+    parkinglot.timestamp_out = timestamp;
+    parkinglot.available = true;
+    updateLastCheckOut(parkinglot);
     card.style.backgroundColor = "#7fd955";
     text.innerHTML = "Available";
 }
 
-
-function CheckInParkingLot(info) {
-    if (info["parking_lot_name"] == "A") {
-        A.timestamp_in  = info['timestamp'];
-        A.available     = false;
-    }
-    else if (info["parking_lot_name"] == "B") {
-        B.timestamp_in  = info['timestamp'];
-        B.available     = false;
-    }
-    else if (info["parking_lot_name"] == "C") {
-        C.timestamp_in  = info['timestamp'];
-        C.available     = false;
-    }
-    else if (info["parking_lot_name"] == "D") {
-        D.timestamp_in  = info['timestamp'];
-        D.available     = false;
-    }
-}
-
-function CheckOutParkingLot(info) {
-    if (info["parking_lot_name"] == "A") {
-        A.timestamp_out  = info['timestamp'];
-        A.available      = true;
-        updateLastCheckOut(A);
-    }
-    else if (info["parking_lot_name"] == "B") {
-        B.timestamp_out  = info['timestamp'];
-        B.available      = true;
-        updateLastCheckOut(B);
-    }
-    else if (info["parking_lot_name"] == "C") {
-        C.timestamp_out  = info['timestamp'];
-        C.available      = true;
-        updateLastCheckOut(C);
-    }
-    else if (info["parking_lot_name"] == "D") {
-        D.timestamp_out  = info['timestamp'];
-        D.available      = true;
-        updateLastCheckOut(D);
-    } 
-}
-
 function updateLastCheckOut(P) {
-    const parkingLotElement     = document.getElementById("p-name");
-    const timeInElement         = document.getElementById("time-in");
-    const timeOutelement        = document.getElementById("time-out");
-    const costElement           = document.getElementById("cost");
-    const boxElement            = document.getElementById("lc-main-box");
+    const parkingLotElement = document.getElementById("p-name");
+    const timeInElement = document.getElementById("time-in");
+    const timeOutelement = document.getElementById("time-out");
+    const costElement = document.getElementById("cost");
+    const boxElement = document.getElementById("lc-main-box");
 
     var timeIn = new Date(P.timestamp_in);
     var timeOut = new Date(P.timestamp_out);
     var timePark = timeOut - timeIn;
-    var timeParkMinute = Math.ceil(timePark/1000/60);
-    var timeInStr = timeIn.toLocaleString("en-US", {timeZoneName: "short"})
-    var timeOutStr = timeOut.toLocaleString("en-US", {timeZoneName: "short"})
-
+    var timeParkMinute = Math.ceil(timePark / 1000 / 60);
+    var timeInStr = timeIn.toLocaleString("en-US", { timeZoneName: "short" })
+    var timeOutStr = timeOut.toLocaleString("en-US", { timeZoneName: "short" })
 
     parkingLotElement.innerHTML = `Parking Lot ${P.name}`;
-    timeInElement.innerHTML     = `${timeInStr}`;
-    timeOutelement.innerHTML    = `${timeOutStr}`;
-    costElement.innerHTML       = `${timeParkMinute*20} XCoin`;
+    timeInElement.innerHTML = `${timeInStr}`;
+    timeOutelement.innerHTML = `${timeOutStr}`;
+    costElement.innerHTML = `${timeParkMinute * 20} XCoin`;
     boxElement.style.backgroundColor = 'rgb(255, 226, 112)';
-    setTimeout(()=> {
+    setTimeout(() => {
         boxElement.style.backgroundColor = 'white';
-    } ,500)
+    }, 500)
 
+    addHistory(selectDict(P.name), P.timestamp_out, timeParkMinute * 20);
 
     P.timestamp_in = 0;
     P.timestamp_out = 0;
-
-
 }
 
-function updateUI_LOCAL(info) {
-    if (info["parking_available"]) {
-        checkIn(info["parking_lot_name"], info["timestamp"]);
-        CheckInParkingLot(info);
-    } else {
-        checkOut(info["parking_lot_name"]);
-        CheckOutParkingLot(info);
-    }
-}
-
-
-// for dict?
-// function updateUI(info) {
-//     if (info["parking_available"]) {
-//         checkIn(info["parking_lot_name"], info["timstamp"]);
-//     } else {
-//         checkOut(info["parking_lot_name"]);
-//     }
-// }
-
-// for response.json()
-function updateUI(info) {
+function update(info) {
     if (info.parking_available) {
-        checkIn(info.parking_lot_name, info.timstamp);
+        checkIn(info.parking_lot_name, info.timestamp*1000);
     } else {
-        checkOut(info.parking_lot_name);
+        checkOut(info.parking_lot_name, info.timestamp*1000);
     }
 }
 
-
-// Parameter = data from GET 
-function Refresh(data) {
-    Object.keys(data).forEach(element => {
-        updateUI(data[element]);
-    });
+function clearData() {
+    A = new ParkingLot(true, 0, 0, "A");
+    B = new ParkingLot(true, 0, 0, "B");
+    C = new ParkingLot(true, 0, 0, "C");
+    D = new ParkingLot(true, 0, 0, "D");
+    A_HIST = {};
+    B_HIST = {};
+    C_HIST = {};
+    D_HIST = {};
 }
-
-
-
-// setInterval(() => {
-//     updateUI();
-// }, 1000);
-// LOCAL
-let first_info = {
-    "_id": "602748f4f56e3c00070ec8af",
-    "parking_lot_name": "A",
-    "parking_available": true,
-    "timestamp": 1613187625
-};
-
-let second_info = {
-    "_id": "602748f4f56e3c00070ec8af",
-    "parking_lot_name": "B",
-    "parking_available": true,
-    "timestamp": 1613197625
-};
-let third_info = {
-    "_id": "602748f4f56e3c00070ec8af",
-    "parking_lot_name": "B",
-    "parking_available": false,
-    "timestamp": 1623197625
-};
-let fourth_info = {
-    "_id": "602748f4f56e3c00070ec8af",
-    "parking_lot_name": "A",
-    "parking_available": false,
-    "timestamp": 1613197625
-};
-function sender1() {
-    updateUI_LOCAL(second_info);
-}
-function sender2() {
-    updateUI_LOCAL(third_info);
-}
-function sender3() {
-    updateUI_LOCAL(fourth_info);
-}
-//
-
-
-
-
-// ใช้ไอ้นี้ สำหลับทุก json record
-updateUI_LOCAL(first_info);
-var a = setTimeout(sender1 , 3000);
-var a = setTimeout(sender2 , 6000);
-var a = setTimeout(sender3 , 9000);
-
-
-
-
-
-
-
 
 function loadData() {
-    var url = "http://158.108.182.0:4321/app/exceed_backend/exceed_backend/g5/view1";
+    var url = "http://158.108.182.6:3000/find_all";
     fetch(url, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
     })
         .then((response) => response.json())
         .then((datas) =>
-            datas.forEach((data) => {
-                updateUI(data);
-                console.log(data);
+            datas.result.forEach((data) => {
+                clearData();
+                update(data);
+                // console.log(data);
             })
         );
 }
 
+loadData();
+setInterval(() => {
+    loadData();
+}, 1000);
+
+
+window.onload = function () {
+    //Plot01
+    var dps01 = []; // dataPoints
+    var chart01 = new CanvasJS.Chart("chartContainer01",
+        {
+            title:
+            {
+                text: "A"
+            },
+            data: [{ type: "line", dataPoints: dps01 }]
+        });
+    //init val
+    var yVal01 = 0;
+    var updateInterval01 = 1000;
+    var dataLength01 = 20; // number of dataPoints visible at any point
+    var updateChart01 = function (count) {
+        for (var key in A_HIST) {
+            yVal01 = yVal01 + A_HIST[key];
+            dps01.push({ x: key, y: yVal01 });
+            delete A_HIST[key]
+        }
+        if (dps01.length > dataLength01) dps01.shift();
+        chart01.render();
+    };
+
+    //Plot02
+    var dps02 = []; // dataPoints
+    var chart02 = new CanvasJS.Chart("chartContainer02",
+        {
+            title:
+            {
+                text: "B"
+            },
+            data: [{ type: "line", dataPoints: dps02 }]
+        });
+    //init val
+    var yVal02 = 0;
+    var updateInterval02 = 1000;
+    var dataLength02 = 20; // number of dataPoints visible at any point
+    var updateChart02 = function (count) {
+        for (var key in B_HIST) {
+            yVal02 = yVal02 + B_HIST[key];
+            dps02.push({ x: key, y: yVal02 });
+            delete B_HIST[key]
+        }
+        if (dps02.length > dataLength02) dps02.shift();
+        chart02.render();
+    };
+
+    //Plot03
+    var dps03 = []; // dataPoints
+    var chart03 = new CanvasJS.Chart("chartContainer03",
+        {
+            title:
+            {
+                text: "C"
+            },
+            data: [{ type: "line", dataPoints: dps03 }]
+        });
+    //init val
+    var yVal03 = 0;
+    var updateInterval03 = 1000;
+    var dataLength03 = 20; // number of dataPoints visible at any point
+    var updateChart03 = function (count) {
+        for (var key in C_HIST) {
+            yVal03 = yVal03 + C_HIST[key];
+            dps03.push({ x: key, y: yVal03 });
+            xVal03 += 1000;
+            delete C_HIST[key]
+        }
+        if (dps03.length > dataLength03) dps03.shift();
+        chart03.render();
+    };
+
+    //Plot04
+    var dps04 = []; // dataPoints
+    var chart04 = new CanvasJS.Chart("chartContainer04",
+        {
+            title:
+            {
+                text: "D"
+            },
+            data: [{ type: "line", dataPoints: dps04 }]
+        });
+    //init val
+    var yVal04 = 0;
+    var updateInterval04 = 1000;
+    var dataLength04 = 20; // number of dataPoints visible at any point
+    var updateChart04 = function (count) {
+        for (var key in D_HIST) {
+            yVal04 = yVal04 + D_HIST[key];
+            dps04.push({ x: key, y: yVal04 });
+            xVal04 += 1000;
+            delete D_HIST[key]
+        }
+        if (dps04.length > dataLength04) dps04.shift();
+        chart04.render();
+    };
+
+
+    updateChart01(dataLength01);
+    setInterval(function () { updateChart01() }, updateInterval01);
+
+    updateChart02(dataLength02);
+    setInterval(function () { updateChart02() }, updateInterval02);
+
+    updateChart03(dataLength03);
+    setInterval(function () { updateChart03() }, updateInterval03);
+
+    updateChart04(dataLength04);
+    setInterval(function () { updateChart04() }, updateInterval04);
+}

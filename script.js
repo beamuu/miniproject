@@ -1,16 +1,12 @@
-const ParkingA = null;
 const cardA = document.getElementById("card-a");
 const textA = document.getElementById("text-a");
 
-const ParkingB = null;
 const cardB = document.getElementById("card-b");
 const textB = document.getElementById("text-b");
 
-const ParkingC = null;
 const cardC = document.getElementById("card-c");
 const textC = document.getElementById("text-c");
 
-const ParkingD = null;
 const cardD = document.getElementById("card-d");
 const textD = document.getElementById("text-d");
 
@@ -62,6 +58,7 @@ function checkOut(where) {
     text.innerHTML = "Available";
 }
 
+<<<<<<< HEAD
 
 function CheckInParkingLot(info) {
     if (info["parking_lot_name"] == "A") {
@@ -133,6 +130,23 @@ function updateUI(info) {
     } else {
         checkOut(info["parking_lot_name"]);
         CheckOutParkingLot(info);
+=======
+// for dict?
+// function updateUI(info) {
+//     if (info["parking_available"]) {
+//         checkIn(info["parking_lot_name"], info["timstamp"]);
+//     } else {
+//         checkOut(info["parking_lot_name"]);
+//     }
+// }
+
+// for response.json()
+function updateUI(info) {
+    if (info.parking_available) {
+        checkIn(info.parking_lot_name, info.timstamp);
+    } else {
+        checkOut(info.parking_lot_name);
+>>>>>>> 9702055dfa3903340bbe80f73a6e2843dcc2a19d
     }
 }
 
@@ -146,6 +160,7 @@ function updateUI(info) {
 //     updateUI();
 // }, 1000);
 
+<<<<<<< HEAD
 let first_info = {
     "_id": "602748f4f56e3c00070ec8af",
     "parking_lot_name": "A",
@@ -165,3 +180,38 @@ function sender()
 // ใช้ไอ้นี้ สำหลับทุก json record
 updateUI(first_info);
 var a = setTimeout(sender , 5000);
+=======
+// let first_info = {
+//     "_id": "602748f4f56e3c00070ec8af",
+//     "parking_lot_name": "A",
+//     "parking_available": false,
+//     "timstamp": 1613187625
+// };
+// let second_info = {
+//     "_id": "602748f4f56e3c00070ec8af",
+//     "parking_lot_name": "B",
+//     "parking_available": true,
+//     "timstamp": 1613187625
+// };
+// ใช้ไอ้นี้ สำหลับทุก json record
+// updateUI(first_info);
+// updateUI(second_info);
+
+
+function loadData() {
+    var url = "http://158.108.182.0:4321/app/exceed_backend/exceed_backend/g5/view1";
+    fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    })
+        .then((response) => response.json())
+        .then((datas) =>
+            datas.forEach((data) => {
+                updateUI(data);
+                console.log(data);
+            })
+        );
+}
+
+loadData();
+>>>>>>> 9702055dfa3903340bbe80f73a6e2843dcc2a19d

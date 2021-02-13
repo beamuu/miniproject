@@ -46,6 +46,7 @@ div.lc-car {
     font-weight: bold;
     margin-bottom: 3%;
     position: relative;
+    transition: 300ms ease;
 }
 .lc-main-info {
     margin: 0;
@@ -86,6 +87,7 @@ div.status-box {
     width: 100%;
     margin-bottom: 16px;
     background-color: #7fd955;
+    transition: 300ms ease;
 }
 
 .text-card {

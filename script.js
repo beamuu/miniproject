@@ -61,51 +61,52 @@ function checkOut(where) {
 
 function CheckInParkingLot(info) {
     if (info["parking_lot_name"] == "A") {
-        A.timestamp_in  = info['timstamp'];
+        A.timestamp_in  = info['timestamp'];
         A.available     = false;
     }
     else if (info["parking_lot_name"] == "B") {
-        B.timestamp_in  = info['timstamp'];
+        B.timestamp_in  = info['timestamp'];
         B.available     = false;
     }
     else if (info["parking_lot_name"] == "C") {
-        C.timestamp_in  = info['timstamp'];
+        C.timestamp_in  = info['timestamp'];
         C.available     = false;
     }
     else if (info["parking_lot_name"] == "D") {
-        D.timestamp_in  = info['timstamp'];
+        D.timestamp_in  = info['timestamp'];
         D.available     = false;
     }
 }
 
 function CheckOutParkingLot(info) {
     if (info["parking_lot_name"] == "A") {
-        A.timestamp_out  = info['timstamp'];
-        A.available     = true;
+        A.timestamp_out  = info['timestamp'];
+        A.available      = true;
         updateLastCheckOut(A);
     }
     else if (info["parking_lot_name"] == "B") {
-        B.timestamp_out  = info['timstamp'];
-        B.available     = true;
+        B.timestamp_out  = info['timestamp'];
+        B.available      = true;
         updateLastCheckOut(B);
     }
     else if (info["parking_lot_name"] == "C") {
-        C.timestamp_out  = info['timstamp'];
-        C.available     = true;
+        C.timestamp_out  = info['timestamp'];
+        C.available      = true;
         updateLastCheckOut(C);
     }
     else if (info["parking_lot_name"] == "D") {
-        D.timestamp_out  = info['timstamp'];
-        D.available     = true;
+        D.timestamp_out  = info['timestamp'];
+        D.available      = true;
         updateLastCheckOut(D);
     } 
 }
 
 function updateLastCheckOut(P) {
-    const parkingLotElement = document.getElementById("p-name");
-    const timeInElement = document.getElementById("time-in");
-    const timeOutelement = document.getElementById("time-out");
-    const costElement = document.getElementById("cost");
+    const parkingLotElement     = document.getElementById("p-name");
+    const timeInElement         = document.getElementById("time-in");
+    const timeOutelement        = document.getElementById("time-out");
+    const costElement           = document.getElementById("cost");
+    const boxElement            = document.getElementById("lc-main-box");
 
     var timeIn = new Date(P.timestamp_in);
     var timeOut = new Date(P.timestamp_out);
@@ -116,9 +117,13 @@ function updateLastCheckOut(P) {
 
 
     parkingLotElement.innerHTML = `Parking Lot ${P.name}`;
-    timeInElement.innerHTML = `${timeInStr}`;
-    timeOutelement.innerHTML = `${timeOutStr}`;
-    costElement.innerHTML = `${timeParkMinute*20} XCoin`;
+    timeInElement.innerHTML     = `${timeInStr}`;
+    timeOutelement.innerHTML    = `${timeOutStr}`;
+    costElement.innerHTML       = `${timeParkMinute*20} XCoin`;
+    boxElement.style.backgroundColor = 'rgb(255, 226, 112)';
+    setTimeout(()=> {
+        boxElement.style.backgroundColor = 'white';
+    } ,500)
 
     P.timestamp_in = 0;
     P.timestamp_out = 0;
@@ -128,7 +133,7 @@ function updateLastCheckOut(P) {
 
 function updateUI_LOCAL(info) {
     if (info["parking_available"]) {
-        checkIn(info["parking_lot_name"], info["timstamp"]);
+        checkIn(info["parking_lot_name"], info["timestamp"]);
         CheckInParkingLot(info);
     } else {
         checkOut(info["parking_lot_name"]);
@@ -167,25 +172,26 @@ let first_info = {
     "_id": "602748f4f56e3c00070ec8af",
     "parking_lot_name": "A",
     "parking_available": true,
-    "timstamp": 1613187625
+    "timestamp": 1613187625
 };
+
 let second_info = {
     "_id": "602748f4f56e3c00070ec8af",
-    "parking_lot_name": "A",
-    "parking_available": false,
-    "timstamp": 1613197625
+    "parking_lot_name": "B",
+    "parking_available": true,
+    "timestamp": 1613197625
 };
 let third_info = {
     "_id": "602748f4f56e3c00070ec8af",
     "parking_lot_name": "B",
-    "parking_available": true,
-    "timstamp": 1613197625
+    "parking_available": false,
+    "timestamp": 1623197625
 };
 let fourth_info = {
     "_id": "602748f4f56e3c00070ec8af",
-    "parking_lot_name": "B",
+    "parking_lot_name": "A",
     "parking_available": false,
-    "timstamp": 1623197625
+    "timestamp": 1613197625
 };
 function sender1() {
     updateUI_LOCAL(second_info);

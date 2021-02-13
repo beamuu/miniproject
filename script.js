@@ -10,12 +10,21 @@ const textC = document.getElementById("text-c");
 const cardD = document.getElementById("card-d");
 const textD = document.getElementById("text-d");
 
+A_HIST = {};
+B_HIST = {};
+C_HIST = {};
+D_HIST = {};
+
+let cache = [];
+
+
 class ParkingLot {
     constructor(available,timestamp_in,timestamp_out,name) {
         this.name           = name;
         this.available      = available;
         this.timestamp_in   = timestamp_in;
         this.timestamp_out  = timestamp_out;
+        this.timestamp
     }
 }
 
@@ -125,6 +134,7 @@ function updateLastCheckOut(P) {
         boxElement.style.backgroundColor = 'white';
     } ,500)
 
+
     P.timestamp_in = 0;
     P.timestamp_out = 0;
 
@@ -140,6 +150,8 @@ function updateUI_LOCAL(info) {
         CheckOutParkingLot(info);
     }
 }
+
+
 // for dict?
 // function updateUI(info) {
 //     if (info["parking_available"]) {
@@ -159,8 +171,12 @@ function updateUI(info) {
 }
 
 
-
-
+// Parameter = data from GET 
+function Refresh(data) {
+    Object.keys(data).forEach(element => {
+        updateUI(data[element]);
+    });
+}
 
 
 

@@ -8,3 +8,16 @@ body {
     /* background-color: lightblue; */
     background: linear-gradient(180deg, #2b5876 0%, #4e4376 100%);
 }
+
+#Head {
+    text-align: center;
+    color: white;
+}
+
+.my-img {
+    display: block;
+    margin: auto;
+    max-height: 20%;
+    max-width: 20%;
+    border-radius: 50%;
+}

@@ -1,16 +1,12 @@
-const ParkingA = null;
 const cardA = document.getElementById("card-a");
 const textA = document.getElementById("text-a");
 
-const ParkingB = null;
 const cardB = document.getElementById("card-b");
 const textB = document.getElementById("text-b");
 
-const ParkingC = null;
 const cardC = document.getElementById("card-c");
 const textC = document.getElementById("text-c");
 
-const ParkingD = null;
 const cardD = document.getElementById("card-d");
 const textD = document.getElementById("text-d");
 
@@ -47,11 +43,21 @@ function checkOut(where) {
     text.innerHTML = "Available";
 }
 
+// for dict?
+// function updateUI(info) {
+//     if (info["parking_available"]) {
+//         checkIn(info["parking_lot_name"], info["timstamp"]);
+//     } else {
+//         checkOut(info["parking_lot_name"]);
+//     }
+// }
+
+// for response.json()
 function updateUI(info) {
-    if (info["parking_available"]) {
-        checkIn(info["parking_lot_name"], info["timstamp"]);
+    if (info.parking_available) {
+        checkIn(info.parking_lot_name, info.timstamp);
     } else {
-        checkOut(info["parking_lot_name"]);
+        checkOut(info.parking_lot_name);
     }
 }
 
@@ -62,9 +68,32 @@ function updateUI(info) {
 // let first_info = {
 //     "_id": "602748f4f56e3c00070ec8af",
 //     "parking_lot_name": "A",
+//     "parking_available": false,
+//     "timstamp": 1613187625
+// };
+// let second_info = {
+//     "_id": "602748f4f56e3c00070ec8af",
+//     "parking_lot_name": "B",
 //     "parking_available": true,
 //     "timstamp": 1613187625
 // };
-
 // ใช้ไอ้นี้ สำหลับทุก json record
-updateUI(first_info);
+// updateUI(first_info);
+// updateUI(second_info);
+
+
+function loadData() {
+    var url = "https://..."
+    fetch(url, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    })
+        .then((response) => response.json())
+        .then((datas) =>
+            datas.forEach((data) => {
+                updateUI(data);
+            })
+        );
+}
+
+loadData();

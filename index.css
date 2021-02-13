@@ -87,7 +87,7 @@ div.status-box {
     width: 100%;
     margin-bottom: 16px;
     background-color: #7fd955;
-    transition: 300ms ease;
+    transition: 500ms ease;
 }
 
 .text-card {

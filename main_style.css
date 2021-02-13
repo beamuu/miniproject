@@ -13,3 +13,11 @@ body {
     text-align: center;
     color: white;
 }
+
+.my-img {
+    display: block;
+    margin: auto;
+    max-height: 20%;
+    max-width: 20%;
+    border-radius: 50%;
+}
